@@ -14,6 +14,8 @@ struct Home: View {
     var body: some View {
         VStack(spacing: 15) {
             Image("excersize")
+                .resizable()
+                .frame(width: 300, height: 300)
                 .padding(.top, 40)
             Spacer(minLength: 0)
             Text("Weight")
@@ -25,34 +27,6 @@ struct Home: View {
                 .foregroundColor(Color("purple"))
                 .padding(.bottom, 20)
             
-            //            // Sample building in swfitui
-            //            ScrollView(.horizontal, showsIndicators: false, content: {
-            //                // ie from 40kg to 100kg
-            //                let pickerCount = 6
-            //                HStack(spacing: 0) {
-            //                    ForEach(1...pickerCount, id: \.self) { index in
-            //                        Rectangle()
-            //                            .fill(Color.gray)
-            //                            .frame(width: 1, height: 30)
-            //                        // each picker tick will have 20 width
-            //                            .frame(width: 20)
-            //
-            //                        // subticks
-            //                        // fixed subticks will have four for each main tick
-            //                        ForEach(1...4, id: \.self) { subIndex in
-            //                            Rectangle()
-            //                                .fill(Color.gray)
-            //                                .frame(width: 1, height: 15)
-            //                            // each picker tick will have 20 width
-            //                                .frame(width: 20)
-            //                        }
-            //                    }
-            //                }
-            //                // Moving the first tick to center
-            //                .offset(x: (getRect().width - 30) / 2)
-            //                .padding(.trailing, getRect().width - 30)
-            //            })
-            
             // ie from 40kg to 100kg
             let pickerCount = 6
             CustomSlider(pickerCount: pickerCount, offset: $offset, content: {
@@ -62,12 +36,11 @@ struct Home: View {
                             Rectangle()
                                 .fill(Color.gray)
                                 .frame(width: 1, height: 30)
-                            // each picker tick will have 20 width
-                            
                             Text("\(30 + (index * 10))")
                                 .font(.caption2)
                                 .foregroundColor(.gray)
                         }
+                        // each picker tick will have 20 width
                         .frame(width: 20)
                         
                         // subticks
@@ -84,12 +57,11 @@ struct Home: View {
                         Rectangle()
                             .fill(Color.gray)
                             .frame(width: 1, height: 30)
-                        // each picker tick will have 20 width
-                        
                         Text("\(100)")
                             .font(.caption2)
                             .foregroundColor(.gray)
                     }
+                    // each picker tick will have 20 width
                     .frame(width: 20)
                 }
             })
@@ -99,7 +71,7 @@ struct Home: View {
                 Rectangle()
                     .fill(Color.gray)
                     .frame(width: 1, height: 50)
-                    .offset(x: 0.8, y: -30)
+                    .offset(x: 1, y: -30)
             )
             .padding()
             Button(action: {}) {
@@ -138,7 +110,6 @@ struct Home: View {
         // each subtick will calculated as 2
         return "\(startWeight + (Int(progress) * 2))"
     }
-    
 }
 
 #Preview {
@@ -147,7 +118,6 @@ struct Home: View {
 
 // Screen size
 func getRect() -> CGRect {
-    print(UIScreen.main.bounds)
     return UIScreen.main.bounds
 }
 
@@ -178,7 +148,7 @@ struct CustomSlider<Content: View>: UIViewRepresentable {
         // each pickercount have 4 subpickers
         // so 6 * 4 = 24 + 6 = 30
         // picker * 5
-        let width = CGFloat((pickerCount * 5) * 20) + (getRect().width + 55.5)
+        let width = CGFloat((pickerCount * 5) * 20) + (getRect().width - 30)
         swiftUIView.frame = CGRect(x: 0, y: 0, width: width, height: 50)
         scrollView.contentSize = swiftUIView.frame.size
         scrollView.addSubview(swiftUIView)
