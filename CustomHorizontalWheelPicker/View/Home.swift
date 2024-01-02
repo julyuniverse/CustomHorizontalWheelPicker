@@ -14,6 +14,7 @@ struct Home: View {
     var body: some View {
         VStack(spacing: 15) {
             Image("excersize")
+                .padding(.top, 40)
             Spacer(minLength: 0)
             Text("Weight")
                 .font(.title)
@@ -54,7 +55,6 @@ struct Home: View {
             
             // ie from 40kg to 100kg
             let pickerCount = 6
-            
             CustomSlider(pickerCount: pickerCount, offset: $offset, content: {
                 HStack(spacing: 0) {
                     ForEach(1...pickerCount, id: \.self) { index in
@@ -64,7 +64,7 @@ struct Home: View {
                                 .frame(width: 1, height: 30)
                             // each picker tick will have 20 width
                             
-                            Text("\(30 * (index * 10))")
+                            Text("\(30 + (index * 10))")
                                 .font(.caption2)
                                 .foregroundColor(.gray)
                         }
@@ -126,7 +126,7 @@ struct Home: View {
             // Enlarging circle
                 .scaleEffect(1.5)
             // Moving up
-                .offset(y: -getRect().height / 2)
+                .offset(y: -getRect().height / 2.4)
         )
     }
     
@@ -147,6 +147,7 @@ struct Home: View {
 
 // Screen size
 func getRect() -> CGRect {
+    print(UIScreen.main.bounds)
     return UIScreen.main.bounds
 }
 
@@ -177,7 +178,7 @@ struct CustomSlider<Content: View>: UIViewRepresentable {
         // each pickercount have 4 subpickers
         // so 6 * 4 = 24 + 6 = 30
         // picker * 5
-        let width = CGFloat((pickerCount * 5) * 20) + (getRect().width - 30)
+        let width = CGFloat((pickerCount * 5) * 20) + (getRect().width + 55.5)
         swiftUIView.frame = CGRect(x: 0, y: 0, width: width, height: 50)
         scrollView.contentSize = swiftUIView.frame.size
         scrollView.addSubview(swiftUIView)
